@@ -1,0 +1,16 @@
+{
+  "tasks": {
+    "pngencrypt": "deno run --allow-env --allow-read --allow-write --allow-net pngencrypt.ts",
+    "pngdecrypt": "deno run --allow-env --allow-read --allow-write --allow-net pngdecrypt.ts",
+    "compile-pngencrypt": "deno compile --cached-only --frozen --no-npm --allow-env --allow-read --allow-write --allow-net pngencrypt.ts",
+    "compile-pngdecrypt": "deno compile --cached-only --frozen --no-npm --allow-env --allow-read --allow-write --allow-net pngdecrypt.ts"
+  },
+  "imports": {
+    "canvas": "https://deno.land/x/canvas@v1.4.2/mod.ts",
+    "crc32": "https://deno.land/x/crc32@v0.2.0/mod.ts",
+    "png": "https://deno.land/x/png@0.5.1/mod.ts",
+    "imagescript": "https://deno.land/x/imagescript@1.2.15/mod.ts",
+    "fs": "https://deno.land/std@0.110.0/fs/mod.ts",
+    "path": "https://deno.land/std@0.110.0/path/mod.ts"
+  }
+}
