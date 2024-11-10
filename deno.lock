@@ -7,6 +7,7 @@
     "https://deno.land/std@0.106.0/encoding/base64.ts": "eecae390f1f1d1cae6f6c6d732ede5276bf4b9cd29b1d281678c054dc5cc009e",
     "https://deno.land/std@0.110.0/_util/assert.ts": "2f868145a042a11d5ad0a3c748dcf580add8a0dbc0e876eaa0026303a5488f58",
     "https://deno.land/std@0.110.0/_util/os.ts": "dfb186cc4e968c770ab6cc3288bd65f4871be03b93beecae57d657232ecffcac",
+    "https://deno.land/std@0.110.0/fmt/colors.ts": "8368ddf2d48dfe413ffd04cdbb7ae6a1009cf0dccc9c7ff1d76259d9c61a0621",
     "https://deno.land/std@0.110.0/fs/_util.ts": "f2ce811350236ea8c28450ed822a5f42a0892316515b1cd61321dec13569c56b",
     "https://deno.land/std@0.110.0/fs/copy.ts": "631bbafbfe6cba282158abc8aeb7e8251cc69a7ec28ce12878ea1b75fec2add4",
     "https://deno.land/std@0.110.0/fs/empty_dir.ts": "5f08b263dd064dc7917c4bbeb13de0f5505a664b9cdfe312fa86e7518cfaeb84",
@@ -29,6 +30,8 @@
     "https://deno.land/std@0.110.0/path/posix.ts": "34349174b9cd121625a2810837a82dd8b986bbaaad5ade690d1de75bbb4555b2",
     "https://deno.land/std@0.110.0/path/separator.ts": "8fdcf289b1b76fd726a508f57d3370ca029ae6976fcde5044007f062e643ff1c",
     "https://deno.land/std@0.110.0/path/win32.ts": "2edb2f71f10578ee1168de01a8cbd3c65483e45a46bc2fa3156a0c6bfbd2720d",
+    "https://deno.land/std@0.110.0/testing/_diff.ts": "ccd6c3af6e44c74bf1591acb1361995f5f50df64323a6e7fb3f16c8ea792c940",
+    "https://deno.land/std@0.110.0/testing/asserts.ts": "6b0d6ba564bdff807bd0f0e93e02c48aa3177acf19416bf84a7f420191ef74cd",
     "https://deno.land/x/canvas@v1.4.2/deps.ts": "e956026d98094946166e06d7b799290b732db015813870d84e04e33ab88e98f3",
     "https://deno.land/x/canvas@v1.4.2/mod.ts": "a4e16972647ceafef58612a377a218372454c99d2c9da615a132694597114f80",
     "https://deno.land/x/canvas@v1.4.2/src/base64.ts": "0928031fdba0c43b617154fbe2eb7578366460c04da1422933ae5e936d3d0349",
@@ -67,5 +70,10 @@
     "https://deno.land/x/imagescript@1.2.15/v2/ops/resize.mjs": "814e78ebce8eaf8f1f918688db7b52a141405e06a36ed4b25d04413d69e7d17b",
     "https://deno.land/x/imagescript@1.2.15/v2/ops/rotate.mjs": "a1b65616717bd2eed8db406affea3263b4674dada46b56441ef38167a187455d",
     "https://deno.land/x/imagescript@1.2.15/v2/util/mem.mjs": "4968d400dae069b4bf0ef4767c1802fd2cc7d15d90eda4cfadf5b4cd19b96c6d"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/fs@^1.0.5"
+    ]
   }
 }

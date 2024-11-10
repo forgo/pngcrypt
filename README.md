@@ -5,11 +5,9 @@ Use [steganography](https://en.wikipedia.org/wiki/Steganography) to encrypt a fi
 ## Compile
 
 ```sh
-# Create self-contained `pngencrypt` executable
-deno task compile-pngencrypt
-
-# Create self-contained `pngdecrypt` executable
-deno task compile-pngdecrypt
+# Create self-contained executables (`pngencrypt`, `pngdecrypt`)
+# for all supported targets in the `build/` directory.
+deno task compile
 ```
 
 ## Generate a Secret

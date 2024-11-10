@@ -3,8 +3,8 @@
  * echo ${secret} | pngencrypt <file-input> <png-mask> <png-encrypted>
  */
 
-import { encryptFileToPNG } from "./encrypt.ts";
-import { getKey } from "./getKey.ts";
+import encryptFileToPNG from "./src/encryptFileToPNG.ts";
+import { getKey } from "./src/getKey.ts";
 
 // prepare/validate key for encryption usage
 const aesKey = await getKey(["encrypt"]);

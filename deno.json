@@ -1,16 +1,38 @@
 {
   "tasks": {
-    "pngencrypt": "deno run --allow-env --allow-read --allow-write --allow-net pngencrypt.ts",
-    "pngdecrypt": "deno run --allow-env --allow-read --allow-write --allow-net pngdecrypt.ts",
-    "compile-pngencrypt": "deno compile --cached-only --frozen --no-npm --allow-env --allow-read --allow-write --allow-net pngencrypt.ts",
-    "compile-pngdecrypt": "deno compile --cached-only --frozen --no-npm --allow-env --allow-read --allow-write --allow-net pngdecrypt.ts"
+    "pngencrypt": "deno run --allow-read --allow-write --allow-net pngencrypt.ts",
+    "pngdecrypt": "deno run --allow-read --allow-write --allow-net pngdecrypt.ts",
+
+    "compile-pngencrypt-x86_64-pc-windows-msvc": "deno compile --target x86_64-pc-windows-msvc --output ./build/pngencrypt-x86_64-pc-windows-msvc --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
+    "compile-pngdecrypt-x86_64-pc-windows-msvc": "deno compile --target x86_64-pc-windows-msvc --output ./build/pngdecrypt-x86_64-pc-windows-msvc --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
+
+    "compile-pngencrypt-x86_64-apple-darwin": "deno compile --target x86_64-apple-darwin --output ./build/pngencrypt-x86_64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
+    "compile-pngdecrypt-x86_64-apple-darwin": "deno compile --target x86_64-apple-darwin --output ./build/pngdecrypt-x86_64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
+
+    "compile-pngencrypt-aarch64-apple-darwin": "deno compile --target aarch64-apple-darwin --output ./build/pngencrypt-aarch64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
+    "compile-pngdecrypt-aarch64-apple-darwin": "deno compile --target aarch64-apple-darwin --output ./build/pngdecrypt-aarch64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
+
+    "compile-pngencrypt-x86_64-unknown-linux-gnu": "deno compile --target x86_64-unknown-linux-gnu --output ./build/pngencrypt-x86_64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
+    "compile-pngdecrypt-x86_64-unknown-linux-gnu": "deno compile --target x86_64-unknown-linux-gnu --output ./build/pngdecrypt-x86_64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
+
+    "compile-pngencrypt-aarch64-unknown-linux-gnu": "deno compile --target aarch64-unknown-linux-gnu --output ./build/pngencrypt-aarch64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
+    "compile-pngdecrypt-aarch64-unknown-linux-gnu": "deno compile --target aarch64-unknown-linux-gnu --output ./build/pngdecrypt-aarch64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
+
+    "compile-pngencrypt": "deno task compile-pngencrypt-x86_64-pc-windows-msvc && deno task compile-pngencrypt-x86_64-apple-darwin && deno task compile-pngencrypt-aarch64-apple-darwin && deno task compile-pngencrypt-x86_64-unknown-linux-gnu && deno task compile-pngencrypt-aarch64-unknown-linux-gnu",
+    "compile-pngdecrypt": "deno task compile-pngdecrypt-x86_64-pc-windows-msvc && deno task compile-pngdecrypt-x86_64-apple-darwin && deno task compile-pngdecrypt-aarch64-apple-darwin && deno task compile-pngdecrypt-x86_64-unknown-linux-gnu && deno task compile-pngdecrypt-aarch64-unknown-linux-gnu",
+
+    "compile": "deno task compile-pngencrypt && deno task compile-pngdecrypt",
+    "clean": "deno run --allow-run --allow-read --allow-write clean.ts",
+    "e2e": "deno run --allow-run --allow-read --allow-write --allow-net e2e/e2e.ts"
   },
   "imports": {
+    "@std/fs": "jsr:@std/fs@^1.0.5",
     "canvas": "https://deno.land/x/canvas@v1.4.2/mod.ts",
     "crc32": "https://deno.land/x/crc32@v0.2.0/mod.ts",
-    "png": "https://deno.land/x/png@0.5.1/mod.ts",
-    "imagescript": "https://deno.land/x/imagescript@1.2.15/mod.ts",
     "fs": "https://deno.land/std@0.110.0/fs/mod.ts",
-    "path": "https://deno.land/std@0.110.0/path/mod.ts"
+    "imagescript": "https://deno.land/x/imagescript@1.2.15/mod.ts",
+    "path": "https://deno.land/std@0.110.0/path/mod.ts",
+    "png": "https://deno.land/x/png@0.5.1/mod.ts",
+    "asserts": "https://deno.land/std@0.110.0/testing/asserts.ts"
   }
 }

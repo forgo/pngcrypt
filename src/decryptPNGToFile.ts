@@ -7,7 +7,7 @@ export type DecryptOptions = {
   fileOutput: string;
 };
 
-export async function decryptPNGToFile({
+export default async function decryptPNGToFile({
   aesKey,
   pngEncrypted,
   fileOutput,

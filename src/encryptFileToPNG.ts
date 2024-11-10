@@ -16,7 +16,7 @@ export type EncryptParams = {
   pngEncrypted: string;
 };
 
-export async function encryptFileToPNG({
+export default async function encryptFileToPNG({
   aesKey,
   fileInput,
   pngMask,

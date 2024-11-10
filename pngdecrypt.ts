@@ -3,8 +3,8 @@
  * echo ${secret} | pngdecrypt <png-encrypted> <file-output>
  */
 
-import { decryptPNGToFile } from "./decrypt.ts";
-import { getKey } from "./getKey.ts";
+import decryptPNGToFile from "./src/decryptPNGToFile.ts";
+import { getKey } from "./src/getKey.ts";
 
 // prepare/validate key for decryption usage
 const aesKey = await getKey(["decrypt"]);
