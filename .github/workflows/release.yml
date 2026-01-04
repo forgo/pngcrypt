@@ -1,0 +1,129 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g., 1.0.0 or 1.0.0-alpha.1)"
+        required: true
+        type: string
+      release_type:
+        description: "Release type"
+        required: true
+        type: choice
+        options:
+          - official
+          - alpha
+          - beta
+          - rc
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  validate-version:
+    name: Validate Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate version format
+        run: |
+          VERSION="${{ inputs.version }}"
+          RELEASE_TYPE="${{ inputs.release_type }}"
+
+          # Check basic semver format
+          if ! echo "$VERSION" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+(-[a-z]+\.[0-9]+)?$'; then
+            echo "Error: Invalid version format. Expected: X.Y.Z or X.Y.Z-type.N"
+            exit 1
+          fi
+
+          # Validate version matches release type
+          case "$RELEASE_TYPE" in
+            official)
+              if echo "$VERSION" | grep -qE '-'; then
+                echo "Error: Official releases cannot have prerelease tags"
+                exit 1
+              fi
+              ;;
+            alpha)
+              if ! echo "$VERSION" | grep -qE '-alpha\.[0-9]+$'; then
+                echo "Error: Alpha releases must use format X.Y.Z-alpha.N"
+                exit 1
+              fi
+              ;;
+            beta)
+              if ! echo "$VERSION" | grep -qE '-beta\.[0-9]+$'; then
+                echo "Error: Beta releases must use format X.Y.Z-beta.N"
+                exit 1
+              fi
+              ;;
+            rc)
+              if ! echo "$VERSION" | grep -qE '-rc\.[0-9]+$'; then
+                echo "Error: RC releases must use format X.Y.Z-rc.N"
+                exit 1
+              fi
+              ;;
+          esac
+
+          echo "Version $VERSION validated for $RELEASE_TYPE release"
+
+  ci:
+    name: CI
+    needs: validate-version
+    uses: ./.github/workflows/pngcrypt.yml
+    permissions:
+      contents: read
+    with:
+      build: true
+
+  release:
+    name: Create Release
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+          pattern: binaries-*
+          merge-multiple: true
+
+      - name: List artifacts
+        run: ls -la ./artifacts/
+
+      - name: Create tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ inputs.version }}" -m "Release ${{ inputs.version }}"
+          git push origin "${{ inputs.version }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          name: ${{ inputs.version }}
+          prerelease: ${{ inputs.release_type != 'official' }}
+          generate_release_notes: true
+          files: |
+            ./artifacts/*
+          body: |
+            ## Installation
+
+            Download the appropriate binary for your platform:
+
+            | Platform | Binary |
+            |----------|--------|
+            | Windows (x64) | `pngencrypt-x86_64-pc-windows-msvc`, `pngdecrypt-x86_64-pc-windows-msvc` |
+            | macOS (Intel) | `pngencrypt-x86_64-apple-darwin`, `pngdecrypt-x86_64-apple-darwin` |
+            | macOS (Apple Silicon) | `pngencrypt-aarch64-apple-darwin`, `pngdecrypt-aarch64-apple-darwin` |
+            | Linux (x64) | `pngencrypt-x86_64-unknown-linux-gnu`, `pngdecrypt-x86_64-unknown-linux-gnu` |
+            | Linux (ARM64) | `pngencrypt-aarch64-unknown-linux-gnu`, `pngdecrypt-aarch64-unknown-linux-gnu` |
+
+            See the [README](https://github.com/${{ github.repository }}#readme) for usage instructions.

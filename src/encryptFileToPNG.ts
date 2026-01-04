@@ -26,7 +26,7 @@ export default async function encryptFileToPNG({
   const fileData = await Deno.readFile(fileInput);
   const iv = crypto.getRandomValues(new Uint8Array(16));
   const encryptedData = new Uint8Array(
-    await crypto.subtle.encrypt({ name: "AES-CBC", iv }, aesKey, fileData)
+    await crypto.subtle.encrypt({ name: "AES-CBC", iv }, aesKey, fileData),
   );
 
   // Combine IV and encrypted data
@@ -86,7 +86,7 @@ export default async function encryptFileToPNG({
 
   if (dataBits.length > totalAvailableBits) {
     console.error(
-      "Data is too large to embed in the provided image. Please use a larger cover image or compress the data further."
+      "Data is too large to embed in the provided image. Please use a larger cover image or compress the data further.",
     );
     return;
   }
@@ -125,7 +125,7 @@ export default async function encryptFileToPNG({
 async function compressData(data: Uint8Array): Promise<Uint8Array> {
   const cs = new CompressionStream("gzip");
   const writer = cs.writable.getWriter();
-  writer.write(data);
+  writer.write(data.slice());
   writer.close();
   const compressedData = await new Response(cs.readable).arrayBuffer();
   return new Uint8Array(compressedData);

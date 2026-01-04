@@ -1,0 +1,119 @@
+name: pngcrypt
+
+on:
+  workflow_call:
+    inputs:
+      build:
+        description: "Build cross-platform binaries"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Lint
+        run: deno lint
+
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Check formatting
+        run: deno fmt --check
+
+  typecheck:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Type check
+        run: deno check pngencrypt.ts pngdecrypt.ts
+
+  test:
+    name: E2E Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Run E2E tests
+        run: deno task e2e
+
+  build:
+    name: Build
+    needs: [lint, format, typecheck, test]
+    if: inputs.build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - x86_64-pc-windows-msvc
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
+          - x86_64-unknown-linux-gnu
+          - aarch64-unknown-linux-gnu
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Build pngencrypt
+        run: |
+          deno compile \
+            --target ${{ matrix.target }} \
+            --output ./build/pngencrypt-${{ matrix.target }} \
+            --allow-read --allow-write --allow-net \
+            pngencrypt.ts
+
+      - name: Build pngdecrypt
+        run: |
+          deno compile \
+            --target ${{ matrix.target }} \
+            --output ./build/pngdecrypt-${{ matrix.target }} \
+            --allow-read --allow-write --allow-net \
+            pngdecrypt.ts
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: binaries-${{ matrix.target }}
+          path: ./build/*
+          retention-days: 7

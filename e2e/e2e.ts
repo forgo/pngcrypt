@@ -1,5 +1,5 @@
 import { Image } from "imagescript";
-import { assertEquals, assert } from "asserts";
+import { assert, assertEquals } from "asserts";
 
 // Paths to files for testing
 const OUTPUT_DIR = "./e2e/output";
@@ -110,7 +110,7 @@ async function runEndToEndTest() {
       MASK_FILE,
       ENCRYPTED_FILE,
     ],
-    SECRET
+    SECRET,
   );
 
   const maskInfo = await Deno.stat(MASK_FILE);
@@ -141,7 +141,7 @@ async function runEndToEndTest() {
   console.log(`maskImage dimensions: ${maskImage.width}x${maskImage.height}`);
 
   console.log(
-    `encryptedImage dimensions: ${encryptedImage.width}x${encryptedImage.height}`
+    `encryptedImage dimensions: ${encryptedImage.width}x${encryptedImage.height}`,
   );
 
   const avgDifference = computeImageDifference(maskImage, encryptedImage);
@@ -152,7 +152,7 @@ async function runEndToEndTest() {
 
   assert(
     avgDifference <= acceptableDifference,
-    `Images differ more than acceptable threshold. Difference: ${avgDifference}`
+    `Images differ more than acceptable threshold. Difference: ${avgDifference}`,
   );
 
   console.log("Images are visually identical within acceptable threshold.");
@@ -169,7 +169,7 @@ async function runEndToEndTest() {
       ENCRYPTED_FILE,
       DECRYPTED_FILE,
     ],
-    SECRET
+    SECRET,
   );
 
   console.log("Validating decrypted.zip matches original mock.zip...");

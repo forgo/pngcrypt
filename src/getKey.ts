@@ -12,7 +12,7 @@ function hexToUint8Array(hexKey: string): Uint8Array {
 
   // Convert hex string to Uint8Array of raw bytes
   return new Uint8Array(
-    hexKey.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16))
+    hexKey.match(/.{1,2}/g)!.map((byte) => parseInt(byte, 16)),
   );
 }
 
@@ -20,7 +20,7 @@ export async function getKey(keyUsages: KeyUsage[]) {
   // Check if stdin is a TTY
   if (Deno.stdin.isTerminal()) {
     console.error(
-      "Error: No input received on stdin. Please pipe the secret into the program."
+      "Error: No input received on stdin. Please pipe the secret into the program.",
     );
     Deno.exit(1);
   }
@@ -43,16 +43,16 @@ export async function getKey(keyUsages: KeyUsage[]) {
 
   if (!VALID_KEY_LENGTHS.includes(keyBytes.length)) {
     throw new Error(
-      "Invalid key length. AES requires a key of 128, 192, or 256 bits. Try `openssl rand -hex ${N}` where N={16,24,32}."
+      "Invalid key length. AES requires a key of 128, 192, or 256 bits. Try `openssl rand -hex ${N}` where N={16,24,32}.",
     );
   }
 
   // Prepare encryption key
   return await crypto.subtle.importKey(
     "raw",
-    keyBytes,
+    keyBytes.buffer as ArrayBuffer,
     "AES-CBC",
     false,
-    keyUsages
+    keyUsages,
   );
 }

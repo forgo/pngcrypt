@@ -14,7 +14,7 @@ const [fileInput, pngMask, pngEncrypted] = Deno.args;
 
 if (!fileInput || !pngMask || !pngEncrypted) {
   console.error(
-    "Usage: echo ${secret} | deno task encrypt <file-input> <png-mask> <png-encrypted>"
+    "Usage: echo ${secret} | deno task encrypt <file-input> <png-mask> <png-encrypted>",
   );
   Deno.exit(1);
 }

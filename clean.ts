@@ -19,7 +19,7 @@ async function cleanBuildDirectory() {
 
   // Prompt for confirmation before deletion
   const confirmed = confirm(
-    "Are you sure you want to delete the ./build directory?"
+    "Are you sure you want to delete the ./build directory?",
   );
   if (!confirmed) {
     console.log("Cancelled cleaning ./build directory.");

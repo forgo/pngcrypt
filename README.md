@@ -1,6 +1,8 @@
 # pngcrypt
 
-Use [steganography](https://en.wikipedia.org/wiki/Steganography) to encrypt a file's contents (e.g - `file.zip`) into a PNG image and use an existing PNG (e.g. - `mask.png`) to make the encrypted image appear normal.
+Use [steganography](https://en.wikipedia.org/wiki/Steganography) to encrypt a
+file's contents (e.g - `file.zip`) into a PNG image and use an existing PNG
+(e.g. - `mask.png`) to make the encrypted image appear normal.
 
 ## Compile
 
@@ -21,9 +23,11 @@ openssl rand -hex 32 # 128-bits of entropy
 
 ## Generate a Mask
 
-The mask image must be a valid PNG file and at least as big as the size of the file contents you wish to encrypt within it.
+The mask image must be a valid PNG file and at least as big as the size of the
+file contents you wish to encrypt within it.
 
-**Tip**: Using `Preview` on a Mac, artifically inflate the size of an existing image by using the `Tools > Adjust Size...`
+**Tip**: Using `Preview` on a Mac, artifically inflate the size of an existing
+image by using the `Tools > Adjust Size...`
 
 1. scale the image by some factor
 2. approximate "Resulting Size" to before pressing "OK"
@@ -47,14 +51,16 @@ echo ${secret} | pngdecrypt encrypted.png file.zip
 
 Avoid exposing the secret to maintain its integrity!
 
-Instead of using `openssl` directly, use a service like Doppler to generate a valid hex secret on a trusted host.
+Instead of using `openssl` directly, use a service like Doppler to generate a
+valid hex secret on a trusted host.
 
 ```sh
 doppler secrets get SECRET --plain | pngencrypt ...
 doppler secrets get SECRET --plain | pngdecrypt ...
 ```
 
-Once you have transferred the image and decrypted with `pngdecrypt`, you can delete all traces of the encrypted image and secret store.
+Once you have transferred the image and decrypted with `pngdecrypt`, you can
+delete all traces of the encrypted image and secret store.
 
 #### Why is this more secure?
 
@@ -65,7 +71,9 @@ Once you have transferred the image and decrypted with `pngdecrypt`, you can del
 
 - Avoids Environment Variables:
 
-  - Environment variables can sometimes be exposed via process monitoring tools like ps or could be inherited by child processes. By not using them, you eliminate this risk.
+  - Environment variables can sometimes be exposed via process monitoring tools
+    like ps or could be inherited by child processes. By not using them, you
+    eliminate this risk.
 
 - No Command-Line Exposure:
 
