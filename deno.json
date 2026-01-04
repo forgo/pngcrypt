@@ -1,5 +1,10 @@
 {
   "tasks": {
+    "lint": "deno lint",
+    "fmt": "deno fmt",
+    "fmt:check": "deno fmt --check",
+    "check": "deno check pngencrypt.ts pngdecrypt.ts",
+
     "pngencrypt": "deno run --allow-read --allow-write --allow-net pngencrypt.ts",
     "pngdecrypt": "deno run --allow-read --allow-write --allow-net pngdecrypt.ts",
 

@@ -14,7 +14,7 @@ const [pngEncrypted, fileOutput] = Deno.args;
 
 if (!pngEncrypted || !fileOutput) {
   console.error(
-    "Usage: echo ${secret} | deno task decrypt <png-encrypted> <file-output>"
+    "Usage: echo ${secret} | deno task decrypt <png-encrypted> <file-output>",
   );
   Deno.exit(1);
 }

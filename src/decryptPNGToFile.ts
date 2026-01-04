@@ -97,8 +97,8 @@ export default async function decryptPNGToFile({
       await crypto.subtle.decrypt(
         { name: "AES-CBC", iv },
         aesKey,
-        encryptedContent
-      )
+        encryptedContent,
+      ),
     );
 
     await Deno.writeFile(fileOutput, decryptedData);
@@ -111,7 +111,7 @@ export default async function decryptPNGToFile({
 async function decompressData(data: Uint8Array): Promise<Uint8Array> {
   const ds = new DecompressionStream("gzip");
   const writer = ds.writable.getWriter();
-  writer.write(data);
+  writer.write(data.slice());
   writer.close();
   const decompressedData = await new Response(ds.readable).arrayBuffer();
   return new Uint8Array(decompressedData);
