@@ -74,18 +74,23 @@ jobs:
         run: deno task e2e
 
   build:
-    name: Build
+    name: Build (${{ matrix.target }})
     needs: [lint, format, typecheck, test]
     if: inputs.build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        target:
-          - x86_64-pc-windows-msvc
-          - x86_64-apple-darwin
-          - aarch64-apple-darwin
-          - x86_64-unknown-linux-gnu
-          - aarch64-unknown-linux-gnu
+        include:
+          - target: x86_64-pc-windows-msvc
+            runner: windows-latest
+          - target: x86_64-apple-darwin
+            runner: macos-13
+          - target: aarch64-apple-darwin
+            runner: macos-latest
+          - target: x86_64-unknown-linux-gnu
+            runner: ubuntu-latest
+          - target: aarch64-unknown-linux-gnu
+            runner: ubuntu-24.04-arm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -96,27 +101,20 @@ jobs:
           deno-version: v2.x
 
       - name: Create build directory
-        run: mkdir -p ${{ github.workspace }}/build
+        run: mkdir -p build
+        shell: bash
 
       - name: Build pngencrypt
-        run: |
-          deno compile \
-            --target ${{ matrix.target }} \
-            --output ${{ github.workspace }}/build/pngencrypt-${{ matrix.target }} \
-            --allow-read --allow-write --allow-net \
-            pngencrypt.ts
+        run: deno compile --output build/pngencrypt-${{ matrix.target }} --allow-read --allow-write --allow-net pngencrypt.ts
+        shell: bash
 
       - name: Build pngdecrypt
-        run: |
-          deno compile \
-            --target ${{ matrix.target }} \
-            --output ${{ github.workspace }}/build/pngdecrypt-${{ matrix.target }} \
-            --allow-read --allow-write --allow-net \
-            pngdecrypt.ts
+        run: deno compile --output build/pngdecrypt-${{ matrix.target }} --allow-read --allow-write --allow-net pngdecrypt.ts
+        shell: bash
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: binaries-${{ matrix.target }}
-          path: ${{ github.workspace }}/build/*
+          path: build/*
           retention-days: 7
