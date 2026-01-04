@@ -84,7 +84,8 @@ jobs:
           - target: x86_64-pc-windows-msvc
             runner: windows-latest
           - target: x86_64-apple-darwin
-            runner: macos-13
+            runner: macos-latest
+            cross: true
           - target: aarch64-apple-darwin
             runner: macos-latest
           - target: x86_64-unknown-linux-gnu
@@ -105,11 +106,11 @@ jobs:
         shell: bash
 
       - name: Build pngencrypt
-        run: deno compile --output build/pngencrypt-${{ matrix.target }} --allow-read --allow-write --allow-net pngencrypt.ts
+        run: deno compile ${{ matrix.cross && format('--target {0}', matrix.target) || '' }} --output build/pngencrypt-${{ matrix.target }} --allow-read --allow-write --allow-net pngencrypt.ts
         shell: bash
 
       - name: Build pngdecrypt
-        run: deno compile --output build/pngdecrypt-${{ matrix.target }} --allow-read --allow-write --allow-net pngdecrypt.ts
+        run: deno compile ${{ matrix.cross && format('--target {0}', matrix.target) || '' }} --output build/pngdecrypt-${{ matrix.target }} --allow-read --allow-write --allow-net pngdecrypt.ts
         shell: bash
 
       - name: Upload artifacts
