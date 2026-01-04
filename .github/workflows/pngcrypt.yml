@@ -95,6 +95,9 @@ jobs:
         with:
           deno-version: v2.x
 
+      - name: Create build directory
+        run: mkdir -p ./build
+
       - name: Build pngencrypt
         run: |
           deno compile \
