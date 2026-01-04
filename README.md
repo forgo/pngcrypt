@@ -4,12 +4,15 @@ Use [steganography](https://en.wikipedia.org/wiki/Steganography) to encrypt a
 file's contents (e.g - `file.zip`) into a PNG image and use an existing PNG
 (e.g. - `mask.png`) to make the encrypted image appear normal.
 
-## Compile
+## Prerequisites
+
+- [Deno](https://deno.land/) v2.x or later
+
+## Installation
 
 ```sh
-# Create self-contained executables (`pngencrypt`, `pngdecrypt`)
-# for all supported targets in the `build/` directory.
-deno task compile
+git clone https://github.com/forgo/pngcrypt.git
+cd pngcrypt
 ```
 
 ## Generate a Secret
@@ -38,13 +41,13 @@ image by using the `Tools > Adjust Size...`
 ### Encrypt
 
 ```sh
-echo ${secret} | pngencrypt file.zip mask.png encrypted.png
+echo ${secret} | deno task pngencrypt file.zip mask.png encrypted.png
 ```
 
 ### Decrypt
 
 ```sh
-echo ${secret} | pngdecrypt encrypted.png file.zip
+echo ${secret} | deno task pngdecrypt encrypted.png file.zip
 ```
 
 ### Keep Your Secret Safe!!!
@@ -55,12 +58,12 @@ Instead of using `openssl` directly, use a service like Doppler to generate a
 valid hex secret on a trusted host.
 
 ```sh
-doppler secrets get SECRET --plain | pngencrypt ...
-doppler secrets get SECRET --plain | pngdecrypt ...
+doppler secrets get SECRET --plain | deno task pngencrypt ...
+doppler secrets get SECRET --plain | deno task pngdecrypt ...
 ```
 
-Once you have transferred the image and decrypted with `pngdecrypt`, you can
-delete all traces of the encrypted image and secret store.
+Once you have transferred the image and decrypted with `deno task pngdecrypt`,
+you can delete all traces of the encrypted image and secret store.
 
 #### Why is this more secure?
 
