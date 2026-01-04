@@ -4,29 +4,8 @@
     "fmt": "deno fmt",
     "fmt:check": "deno fmt --check",
     "check": "deno check pngencrypt.ts pngdecrypt.ts",
-
     "pngencrypt": "deno run --allow-read --allow-write --allow-net pngencrypt.ts",
     "pngdecrypt": "deno run --allow-read --allow-write --allow-net pngdecrypt.ts",
-
-    "compile-pngencrypt-x86_64-pc-windows-msvc": "deno compile --target x86_64-pc-windows-msvc --output ./build/pngencrypt-x86_64-pc-windows-msvc --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
-    "compile-pngdecrypt-x86_64-pc-windows-msvc": "deno compile --target x86_64-pc-windows-msvc --output ./build/pngdecrypt-x86_64-pc-windows-msvc --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
-
-    "compile-pngencrypt-x86_64-apple-darwin": "deno compile --target x86_64-apple-darwin --output ./build/pngencrypt-x86_64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
-    "compile-pngdecrypt-x86_64-apple-darwin": "deno compile --target x86_64-apple-darwin --output ./build/pngdecrypt-x86_64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
-
-    "compile-pngencrypt-aarch64-apple-darwin": "deno compile --target aarch64-apple-darwin --output ./build/pngencrypt-aarch64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
-    "compile-pngdecrypt-aarch64-apple-darwin": "deno compile --target aarch64-apple-darwin --output ./build/pngdecrypt-aarch64-apple-darwin --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
-
-    "compile-pngencrypt-x86_64-unknown-linux-gnu": "deno compile --target x86_64-unknown-linux-gnu --output ./build/pngencrypt-x86_64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
-    "compile-pngdecrypt-x86_64-unknown-linux-gnu": "deno compile --target x86_64-unknown-linux-gnu --output ./build/pngdecrypt-x86_64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
-
-    "compile-pngencrypt-aarch64-unknown-linux-gnu": "deno compile --target aarch64-unknown-linux-gnu --output ./build/pngencrypt-aarch64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngencrypt.ts",
-    "compile-pngdecrypt-aarch64-unknown-linux-gnu": "deno compile --target aarch64-unknown-linux-gnu --output ./build/pngdecrypt-aarch64-unknown-linux-gnu --cached-only --frozen --no-npm --allow-read --allow-write --allow-net pngdecrypt.ts",
-
-    "compile-pngencrypt": "deno task compile-pngencrypt-x86_64-pc-windows-msvc && deno task compile-pngencrypt-x86_64-apple-darwin && deno task compile-pngencrypt-aarch64-apple-darwin && deno task compile-pngencrypt-x86_64-unknown-linux-gnu && deno task compile-pngencrypt-aarch64-unknown-linux-gnu",
-    "compile-pngdecrypt": "deno task compile-pngdecrypt-x86_64-pc-windows-msvc && deno task compile-pngdecrypt-x86_64-apple-darwin && deno task compile-pngdecrypt-aarch64-apple-darwin && deno task compile-pngdecrypt-x86_64-unknown-linux-gnu && deno task compile-pngdecrypt-aarch64-unknown-linux-gnu",
-
-    "compile": "deno task compile-pngencrypt && deno task compile-pngdecrypt",
     "clean": "deno run --allow-run --allow-read --allow-write clean.ts",
     "e2e": "deno run --allow-run --allow-read --allow-write --allow-net e2e/e2e.ts"
   },

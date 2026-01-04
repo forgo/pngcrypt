@@ -112,10 +112,3 @@ jobs:
       - name: Build pngdecrypt
         run: deno compile ${{ matrix.cross && format('--target {0}', matrix.target) || '' }} --output build/pngdecrypt-${{ matrix.target }} --allow-read --allow-write --allow-net pngdecrypt.ts
         shell: bash
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: binaries-${{ matrix.target }}
-          path: build/*
-          retention-days: 7
